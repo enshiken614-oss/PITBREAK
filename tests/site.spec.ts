@@ -7,7 +7,7 @@ test("home, navigation, product routes and disabled checkout", async ({
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("./");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-    "RACING MEMES.REAL COLLECTIBLES.",
+    "RACING MEMES. REAL COLLECTIBLES.",
   );
   await expect(page.locator(".product-card")).toHaveCount(3);
   await expect(page.locator(".countries li")).toHaveCount(6);

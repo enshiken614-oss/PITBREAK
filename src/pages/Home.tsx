@@ -12,8 +12,8 @@ export function Home() {
       />
       <Hero />
       <div className="ticker" aria-hidden="true">
-        OFF THE FEED. ON YOUR SHELF. <span>✳</span> MADE FOR THE INSIDE JOKE.{" "}
-        <span>✳</span> OFF THE FEED. ON YOUR SHELF.
+        OFF THE FEED. ON YOUR SHELF. <span>+</span> MADE FOR THE INSIDE JOKE.{" "}
+        <span>+</span> OFF THE FEED. ON YOUR SHELF.
       </div>
       <section className="section">
         <div className="section-heading">

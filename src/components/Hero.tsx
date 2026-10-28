@@ -5,8 +5,7 @@ export function Hero() {
       <div className="hero-copy">
         <p className="eyebrow">SMALL SCALE. BIG INSIDE JOKE.</p>
         <h1>
-          RACING MEMES.
-          <br />
+          RACING MEMES. <br />
           <span>REAL COLLECTIBLES.</span>
         </h1>
         <p className="hero-description">
