@@ -1,0 +1,50 @@
+.gallery {
+  background: transparent;
+}
+
+.gallery > img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: contain;
+  background: #f1efe9;
+  border: 1px solid #d8d5cf;
+}
+
+.gallery-thumbs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.gallery-thumbs button {
+  padding: 0;
+  border: 1px solid #d8d5cf;
+  background: #f1efe9;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.gallery-thumbs button.is-active {
+  border-color: #171717;
+  outline: 1px solid #171717;
+}
+
+.gallery-thumbs img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.product-art img {
+  background: #f1efe9;
+}
+
+@media (max-width: 800px) {
+  .gallery-thumbs {
+    grid-template-columns: repeat(4, minmax(64px, 1fr));
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+}
