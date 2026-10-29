@@ -18,14 +18,19 @@ test("home, navigation, product routes and disabled checkout", async ({
     await expect(
       page.getByRole("button", { name: "ADD TO CART" }),
     ).toBeDisabled();
-    const mainImage = page.locator(".gallery > img");
+    const mainImage = page.locator(".gallery-main > img");
     await expect(mainImage).toBeVisible();
     expect(
       await mainImage.evaluate(
         (el: HTMLImageElement) => el.complete && el.naturalWidth > 0,
       ),
     ).toBe(true);
-    await expect(page.locator(".gallery-thumbs button")).toHaveCount(2);
+    const thumbs = page.locator(".gallery-thumbs button");
+    await expect(thumbs).toHaveCount(2);
+    await expect(thumbs.nth(0)).toContainText("FRONT");
+    await expect(thumbs.nth(1)).toContainText("BACK");
+    await thumbs.nth(1).click();
+    await expect(page.locator(".gallery-view-label")).toHaveText("BACK");
   }
   await page.goto("./#/cart");
   await expect(
