@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { products } from "../data";
+
 export function Hero() {
   return (
     <section className="hero">
@@ -19,27 +21,31 @@ export function Hero() {
           EXPLORE DROP 001 <span>↗</span>
         </Link>
       </div>
-      <div
-        className="hero-art"
-        aria-label="DROP 001 editorial graphic, not a product photograph"
-      >
-        <span className="hero-tag">THE FIRST DROP</span>
-        <div className="drop-type">
-          DROP
-          <br />
-          <span>001</span>
+
+      <div className="hero-products" aria-label="PITBREAK DROP 001 product photography">
+        <div className="hero-products-head">
+          <span>DROP 001 / THE FIRST DROP</span>
+          <span>03 COLLECTIBLES</span>
         </div>
-        <div className="hero-art-footer">
-          <span>
-            THREE MEMES.
-            <br />
-            ONE STARTING GRID.
-          </span>
-          <span>
-            PRODUCT PHOTOS
-            <br />
-            COMING SOON ↗
-          </span>
+        <div className="hero-product-stack">
+          {products.map((product, index) => (
+            <Link
+              key={product.slug}
+              to={`/products/${product.slug}`}
+              className={`hero-product hero-product-${index + 1}`}
+              aria-label={`View ${product.title}`}
+            >
+              <img
+                src={import.meta.env.BASE_URL + product.gallery[0].src}
+                alt={product.gallery[0].alt}
+              />
+              <span>{product.title}</span>
+            </Link>
+          ))}
+        </div>
+        <div className="hero-products-foot">
+          <span>LIGHTS ON.</span>
+          <span>MEMES MADE PHYSICAL.</span>
         </div>
       </div>
     </section>
