@@ -95,13 +95,30 @@
   background: transparent;
 }
 
-.gallery > img {
+.gallery-main {
+  position: relative;
+  background: #f1efe9;
+  border: 1px solid #d8d5cf;
+  overflow: hidden;
+}
+
+.gallery-main > img {
   display: block;
   width: 100%;
   aspect-ratio: 4 / 5;
   object-fit: contain;
-  background: #f1efe9;
-  border: 1px solid #d8d5cf;
+}
+
+.gallery-view-label {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  padding: 6px 8px;
+  background: rgba(23, 23, 23, 0.9);
+  color: #fff;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
 }
 
 .gallery-thumbs {
@@ -112,6 +129,7 @@
 }
 
 .gallery-thumbs button {
+  position: relative;
   padding: 0;
   border: 1px solid #d8d5cf;
   background: #f1efe9;
@@ -128,6 +146,18 @@
   width: 100%;
   aspect-ratio: 4 / 5;
   object-fit: cover;
+}
+
+.gallery-thumbs button > span {
+  position: absolute;
+  left: 6px;
+  bottom: 6px;
+  padding: 4px 6px;
+  background: rgba(250, 249, 246, 0.92);
+  color: #171717;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.9px;
 }
 
 .product-art img {
