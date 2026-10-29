@@ -7,11 +7,14 @@ import { Meta } from "../components/Meta";
 import { StatusLabel } from "../components/StatusLabel";
 import { ProductGallery } from "../components/ProductGallery";
 import { NotFound } from "./NotFound";
+
 export function ProductDetail() {
   const { slug } = useParams();
   const product = products.find((p) => p.slug === slug);
   const { dispatch } = useContext(CartContext);
+
   if (!product) return <NotFound />;
+
   return (
     <section className="section">
       <Meta title={product.seoTitle} description={product.seoDescription} />
@@ -21,7 +24,7 @@ export function ProductDetail() {
       <div className="product-detail">
         <ProductGallery key={product.id} product={product} />
         <div>
-          <p className="eyebrow">DROP 001 / WORKING PRODUCT TITLE</p>
+          <p className="eyebrow">DROP 001 / LIGHT-ON COLLECTIBLE</p>
           <h1>{product.title}</h1>
           <StatusLabel />
           <p className="page-intro">{product.shortDescription}</p>
