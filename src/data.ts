@@ -14,6 +14,7 @@ export type Product = {
   seoTitle: string;
   seoDescription: string;
 };
+
 const entries = [
   [
     "max-childhood-meme",
@@ -33,7 +34,41 @@ const entries = [
     "A little yellow. A lot of personality.",
     "A banana-costume seated miniature, with yellow packaging and a warm-lit display. Final materials and product specifications are pending.",
   ],
-];
+] as const;
+
+const productGallery: Record<string, { src: string; alt: string }[]> = {
+  "max-childhood-meme": [
+    {
+      src: "images/products/max-childhood-meme/front.jpg",
+      alt: "Max Childhood Meme collectible in retail packaging with the warm display light switched on",
+    },
+    {
+      src: "images/products/max-childhood-meme/back.jpg",
+      alt: "Back of the Max Childhood Meme collectible packaging",
+    },
+  ],
+  "lewis-hamilton-meme": [
+    {
+      src: "images/products/lewis-hamilton-meme/front.jpg",
+      alt: "Lewis Hamilton meme collectible in retail packaging with the warm display light switched on",
+    },
+    {
+      src: "images/products/lewis-hamilton-meme/back.jpg",
+      alt: "Back of the Lewis Hamilton meme collectible packaging",
+    },
+  ],
+  "banana-leclerc": [
+    {
+      src: "images/products/banana-leclerc/front.jpg",
+      alt: "Banana Leclerc collectible in retail packaging with the warm display light switched on",
+    },
+    {
+      src: "images/products/banana-leclerc/back.jpg",
+      alt: "Back of the Banana Leclerc collectible packaging",
+    },
+  ],
+};
+
 export const products: Product[] = entries.map(
   ([slug, title, shortDescription, description]) => ({
     id: slug,
@@ -41,12 +76,7 @@ export const products: Product[] = entries.map(
     title,
     shortDescription,
     description,
-    gallery: [
-      {
-        src: `images/products/${slug}.svg`,
-        alt: `Clearly labeled placeholder for ${title}; authentic product photography pending`,
-      },
-    ],
+    gallery: productGallery[slug],
     price: null,
     currency: null,
     stock: "coming_soon",
@@ -58,6 +88,7 @@ export const products: Product[] = entries.map(
     seoDescription: shortDescription,
   }),
 );
+
 export const destinations = [
   "United States",
   "United Kingdom",
@@ -66,11 +97,13 @@ export const destinations = [
   "Japan",
   "Mexico",
 ];
+
 export const site: {
   contactEmail: string | null;
   socialLinks: { label: string; url: string }[];
   canonicalOrigin: string | null;
 } = { contactEmail: null, socialLinks: [], canonicalOrigin: null };
+
 export const faq = [
   [
     "Can I order yet?",
@@ -78,7 +111,7 @@ export const faq = [
   ],
   [
     "Are these the final product photos?",
-    "No. Every gallery is a clearly labeled placeholder. The creator is preparing authentic high-resolution product photography.",
+    "Yes. The current DROP 001 product pages use the approved front light-on and packaging-back photography supplied for Max, Lewis and Banana.",
   ],
   [
     "Where will you ship?",
@@ -93,6 +126,7 @@ export const faq = [
     "The return and refund policy is not finalized. There are no live orders in this preview.",
   ],
 ];
+
 export const policies = {
   returns: {
     title: "Returns & refunds",

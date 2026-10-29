@@ -8,7 +8,7 @@ export function Home() {
     <>
       <Meta
         title="PITBREAK — Racing memes. Real collectibles."
-        description="Meet DROP 001: three independent motorsport-inspired collectibles. Product photography and launch details coming soon."
+        description="Meet DROP 001: three independent motorsport-inspired collectibles, photographed in their retail packaging with display lights on."
       />
       <Hero />
       <div className="ticker" aria-hidden="true">
@@ -71,8 +71,8 @@ export function Home() {
         <span className="eyebrow">NO LIGHTS OUT. YET.</span>
         <h2>Good things take a pit stop.</h2>
         <p>
-          New product photos, launch details and verified social links are on
-          the way. Check back here for updates.
+          DROP 001 is now on display. Pricing, launch timing, shipping services
+          and verified social links are still being confirmed before orders open.
         </p>
         <span className="status">LAUNCH DETAILS COMING SOON</span>
       </section>

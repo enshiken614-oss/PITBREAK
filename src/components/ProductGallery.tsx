@@ -1,23 +1,38 @@
 import { useState } from "react";
 import type { Product } from "../data";
+
 export function ProductGallery({ product }: { product: Product }) {
   const [selected, setSelected] = useState(0);
+  const current = product.gallery[selected];
+  const labels = ["FRONT", "BACK"];
+
   return (
     <div className="gallery">
-      <img
-        src={import.meta.env.BASE_URL + product.gallery[selected].src}
-        alt={product.gallery[selected].alt}
-      />
-      <p>PHOTO PLACEHOLDER · Authentic photography pending</p>
+      <div className="gallery-main">
+        <img
+          src={import.meta.env.BASE_URL + current.src}
+          alt={current.alt}
+        />
+        <span className="gallery-view-label">
+          {labels[selected] ?? `VIEW ${selected + 1}`}
+        </span>
+      </div>
       {product.gallery.length > 1 && (
-        <div aria-label="Gallery images">
+        <div className="gallery-thumbs" aria-label="Product gallery">
           {product.gallery.map((image, i) => (
             <button
               key={image.src}
+              className={selected === i ? "is-active" : ""}
+              aria-label={`View ${product.title} ${labels[i]?.toLowerCase() ?? `image ${i + 1}`}`}
               aria-pressed={selected === i}
               onClick={() => setSelected(i)}
             >
-              Image {i + 1}
+              <img
+                src={import.meta.env.BASE_URL + image.src}
+                alt=""
+                loading="lazy"
+              />
+              <span>{labels[i] ?? `VIEW ${i + 1}`}</span>
             </button>
           ))}
         </div>

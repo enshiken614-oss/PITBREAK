@@ -16,14 +16,17 @@ describe("DROP 001 catalog", () => {
     ]);
     expect(new Set(products.map((p) => p.slug)).size).toBe(3);
   });
-  it("does not invent commercial details", () => {
+  it("does not invent commercial details and uses approved photography", () => {
     for (const p of products) {
       expect(p.price).toBeNull();
       expect(p.currency).toBeNull();
       expect(p.dimensions).toBeNull();
       expect(p.weight).toBeNull();
       expect(p.stock).toBe("coming_soon");
-      expect(p.gallery[0].alt).toContain("placeholder");
+      expect(p.gallery).toHaveLength(2);
+      expect(p.gallery[0].src).toContain(`/products/${p.slug}/front.jpg`);
+      expect(p.gallery[1].src).toContain(`/products/${p.slug}/back.jpg`);
+      expect(p.gallery[0].alt.toLowerCase()).not.toContain("placeholder");
     }
     expect(site.contactEmail).toBeNull();
     expect(site.socialLinks).toEqual([]);
