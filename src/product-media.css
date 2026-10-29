@@ -91,6 +91,31 @@
   transform: translateY(-5px) rotate(0deg);
 }
 
+.product-art .art-number {
+  left: 12px;
+  right: auto;
+  top: 12px;
+  padding: 5px 7px;
+  background: rgba(250, 249, 246, 0.9);
+  color: #171717;
+  border: 1px solid rgba(23, 23, 23, 0.12);
+}
+
+.product-art .art-bottom {
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px;
+  background: rgba(23, 23, 23, 0.88);
+  color: #fff;
+}
+
+.product-art .art-bottom > span {
+  margin-left: auto;
+}
+
 .gallery {
   background: transparent;
 }
@@ -195,5 +220,9 @@
 
   .hero-product-stack {
     padding: 14px 0;
+  }
+
+  .product-art .art-bottom {
+    font-size: 8px;
   }
 }
