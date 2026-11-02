@@ -11,6 +11,16 @@ test("home, navigation, product routes and disabled checkout", async ({
   );
   await expect(page.locator(".product-card")).toHaveCount(3);
   await expect(page.locator(".countries li")).toHaveCount(6);
+
+  for (const image of await page.locator(".product-card .product-art img").all()) {
+    expect(
+      await image.evaluate(
+        (el: HTMLImageElement) =>
+          el.complete && el.naturalWidth >= 1000 && el.naturalHeight >= 1200,
+      ),
+    ).toBe(true);
+  }
+
   await page.getByRole("link", { name: "EXPLORE DROP 001" }).click();
   await expect(page).toHaveURL(/#\/collections\/drop-001$/);
   for (const slug of slugs) {
@@ -22,7 +32,8 @@ test("home, navigation, product routes and disabled checkout", async ({
     await expect(mainImage).toBeVisible();
     expect(
       await mainImage.evaluate(
-        (el: HTMLImageElement) => el.complete && el.naturalWidth > 0,
+        (el: HTMLImageElement) =>
+          el.complete && el.naturalWidth >= 1000 && el.naturalHeight >= 1200,
       ),
     ).toBe(true);
     const thumbs = page.locator(".gallery-thumbs button");
@@ -31,6 +42,13 @@ test("home, navigation, product routes and disabled checkout", async ({
     await expect(thumbs.nth(1)).toContainText("BACK");
     await thumbs.nth(1).click();
     await expect(page.locator(".gallery-view-label")).toHaveText("BACK");
+    await expect(mainImage).toBeVisible();
+    expect(
+      await mainImage.evaluate(
+        (el: HTMLImageElement) =>
+          el.complete && el.naturalWidth >= 1000 && el.naturalHeight >= 1200,
+      ),
+    ).toBe(true);
   }
   await page.goto("./#/cart");
   await expect(
