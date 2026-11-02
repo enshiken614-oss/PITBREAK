@@ -42,3 +42,75 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+  verify-live:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    needs: deploy
+    steps:
+      - name: Verify live bundle uses HD media
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='https://enshiken614-oss.github.io/PITBREAK/'
+          curl -fsSL --retry 5 --retry-delay 2 "${base}" -o /tmp/index.html
+          bundle=$(grep -oE 'assets/index-[^"[:space:]]+\.js' /tmp/index.html | head -n 1)
+          test -n "$bundle"
+          curl -fsSL --retry 5 --retry-delay 2 "${base}${bundle}" -o /tmp/app.js
+          grep -q 'front-hd-20261102.jpg' /tmp/app.js
+
+      - name: Verify all six live JPEGs are original resolution
+        shell: python
+        run: |
+          from pathlib import Path
+          from urllib.request import urlopen
+          import struct
+          import time
+
+          base = 'https://enshiken614-oss.github.io/PITBREAK/images/products/'
+          paths = [
+              'max-childhood-meme/front-hd-20261102.jpg',
+              'max-childhood-meme/back-hd-20261102.jpg',
+              'lewis-hamilton-meme/front-hd-20261102.jpg',
+              'lewis-hamilton-meme/back-hd-20261102.jpg',
+              'banana-leclerc/front-hd-20261102.jpg',
+              'banana-leclerc/back-hd-20261102.jpg',
+          ]
+
+          def jpeg_size(data):
+              if data[:2] != b'\xff\xd8':
+                  raise ValueError('not a JPEG')
+              i = 2
+              while i < len(data):
+                  if data[i] != 0xFF:
+                      i += 1
+                      continue
+                  while i < len(data) and data[i] == 0xFF:
+                      i += 1
+                  marker = data[i]
+                  i += 1
+                  if marker in (0xD8, 0xD9):
+                      continue
+                  length = struct.unpack('>H', data[i:i+2])[0]
+                  if marker in {0xC0,0xC1,0xC2,0xC3,0xC5,0xC6,0xC7,0xC9,0xCA,0xCB,0xCD,0xCE,0xCF}:
+                      h, w = struct.unpack('>HH', data[i+3:i+7])
+                      return w, h
+                  i += length
+              raise ValueError('no JPEG dimensions found')
+
+          for rel in paths:
+              url = base + rel
+              last = None
+              for attempt in range(6):
+                  try:
+                      with urlopen(url, timeout=20) as response:
+                          data = response.read()
+                      w, h = jpeg_size(data)
+                      print(rel, w, h, len(data))
+                      if w < 1000 or h < 1200:
+                          raise RuntimeError(f'low-resolution live image: {w}x{h}')
+                      break
+                  except Exception as exc:
+                      last = exc
+                      if attempt == 5:
+                          raise
+                      time.sleep(3)
