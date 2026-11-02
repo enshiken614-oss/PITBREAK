@@ -24,8 +24,12 @@ describe("DROP 001 catalog", () => {
       expect(p.weight).toBeNull();
       expect(p.stock).toBe("coming_soon");
       expect(p.gallery).toHaveLength(2);
-      expect(p.gallery[0].src).toContain(`/products/${p.slug}/front.jpg`);
-      expect(p.gallery[1].src).toContain(`/products/${p.slug}/back.jpg`);
+      expect(p.gallery[0].src).toContain(
+        `/products/${p.slug}/front-hd-20261102.jpg`,
+      );
+      expect(p.gallery[1].src).toContain(
+        `/products/${p.slug}/back-hd-20261102.jpg`,
+      );
       expect(p.gallery[0].alt.toLowerCase()).not.toContain("placeholder");
     }
     expect(site.contactEmail).toBeNull();

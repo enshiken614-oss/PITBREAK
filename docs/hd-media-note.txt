@@ -1,0 +1,1 @@
+Storefront paths now use cache-busted HD filenames dated 20261102 to prevent browsers from reusing the former low-resolution assets.

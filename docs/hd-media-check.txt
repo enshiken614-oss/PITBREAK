@@ -1,0 +1,6 @@
+banana-front: 1122x1402
+banana-back: 1122x1402
+lewis-front: 1122x1402
+lewis-back: 1122x1402
+max-front: 1122x1402
+max-back: 1122x1402
