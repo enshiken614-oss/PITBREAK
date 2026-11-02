@@ -39,31 +39,31 @@ const entries = [
 const productGallery: Record<string, { src: string; alt: string }[]> = {
   "max-childhood-meme": [
     {
-      src: "images/products/max-childhood-meme/front.jpg",
+      src: "images/products/max-childhood-meme/front-hd-20261102.jpg",
       alt: "Max Childhood Meme collectible in retail packaging with the warm display light switched on",
     },
     {
-      src: "images/products/max-childhood-meme/back.jpg",
+      src: "images/products/max-childhood-meme/back-hd-20261102.jpg",
       alt: "Back of the Max Childhood Meme collectible packaging",
     },
   ],
   "lewis-hamilton-meme": [
     {
-      src: "images/products/lewis-hamilton-meme/front.jpg",
+      src: "images/products/lewis-hamilton-meme/front-hd-20261102.jpg",
       alt: "Lewis Hamilton meme collectible in retail packaging with the warm display light switched on",
     },
     {
-      src: "images/products/lewis-hamilton-meme/back.jpg",
+      src: "images/products/lewis-hamilton-meme/back-hd-20261102.jpg",
       alt: "Back of the Lewis Hamilton meme collectible packaging",
     },
   ],
   "banana-leclerc": [
     {
-      src: "images/products/banana-leclerc/front.jpg",
+      src: "images/products/banana-leclerc/front-hd-20261102.jpg",
       alt: "Banana Leclerc collectible in retail packaging with the warm display light switched on",
     },
     {
-      src: "images/products/banana-leclerc/back.jpg",
+      src: "images/products/banana-leclerc/back-hd-20261102.jpg",
       alt: "Back of the Banana Leclerc collectible packaging",
     },
   ],
