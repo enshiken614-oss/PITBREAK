@@ -1,0 +1,1 @@
+Ready for PR validation: six 1122x1402 JPEGs, cache-busted storefront paths, and Playwright intrinsic-resolution assertions.
