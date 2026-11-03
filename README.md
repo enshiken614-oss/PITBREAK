@@ -23,7 +23,7 @@ Use the existing checkout; cloud tasks are already isolated, so no Git worktree 
 
 ## Pages and deployment
 
-Hash routes (`/PITBREAK/#/products/banana-leclerc`) work on GitHub Pages without a server rewrite. They support refreshes and shared links, at the cost of weaker per-page crawler/social-card support than prerendered routes. The app updates titles/descriptions and OG text on navigation, but social crawlers may only see the static fallback. No canonical origin is invented, no product offers are published, and no hash-route sitemap is generated. The SVG fallback is local; replace with an approved 1200×630 PNG for broader social-platform support.
+Hash routes (`/PITBREAK/#/products/banana-leclerc`) work on GitHub Pages without a server rewrite. They support refreshes and shared links, at the cost of weaker per-page crawler/social-card support than prerendered routes. The app updates titles/descriptions and OG text on navigation, but social crawlers may only see the static fallback. No canonical origin is invented, no product offers are published, and no hash-route sitemap is generated. The static social card uses an absolute URL to a 1200×630 PNG rasterized from the original SVG design.
 
 In GitHub: **Settings → Pages → Build and deployment → Source → GitHub Actions**. Allow Actions if disabled. Push `main`, or select **Actions → Deploy PITBREAK to GitHub Pages → Run workflow**. Pull requests run lint, unit tests, build and responsive Chromium tests. Only `main` can deploy `dist/`; merge the implementation branch first. Deployment needs repository Pages permissions and availability under your GitHub plan.
 
@@ -62,4 +62,10 @@ On this cloud machine, Chromium is already installed: run `PLAYWRIGHT_CHROMIUM_E
 
 ## Validation
 
-Unit tests cover catalog accuracy, planned markets and commerce gates/reducer. Browser tests cover pages, navigation, responsive overflow, image loading, disabled purchases, menu keyboard behavior, FAQ controls and browser runtime errors at phone/tablet/desktop sizes. Current local verification: lint, TypeScript/production build, 7 unit tests and all 9 browser checks passed. Screens checked at 375×812, 820×1180 and 1440×1000. These are Chromium viewport checks, not physical iPad Safari verification. No real transactions are tested or supported.
+Unit tests cover catalog accuracy, planned markets and commerce gates/reducer. Browser tests cover pages, navigation, responsive overflow, image loading, disabled purchases, menu keyboard behavior, FAQ controls and browser runtime errors at phone/tablet/desktop sizes. Current local verification: lint, TypeScript/production build, 7 unit tests and all 12 browser checks passed. Screens checked at 375×812, 820×1180 and 1440×1000. These are Chromium viewport checks, not physical iPad Safari verification. No real transactions are tested or supported.
+
+## Image and metadata optimization
+
+Product images use a shared `ProductImage` component: WebP variants at 320, 640 and 1122 pixels, responsive sizes, explicit intrinsic dimensions, eager hero/gallery loading and lazy card/thumbnail loading. Original JPEG photography remains as the picture fallback. If product photos change, regenerate the matching WebP variants from the approved originals before updating the gallery paths. The current variants use browser WebP encoding at quality 0.84. No product content or checkout behavior was changed.
+
+Static homepage title/description and sharing metadata are provided in `index.html`. Hash-route per-product indexing limitations remain; this change does not introduce prerendering or new routes. Social cards must be reconfigured if the deployment origin changes.

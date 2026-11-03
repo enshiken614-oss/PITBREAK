@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import type { Product } from "../data";
+import { ProductImage } from "./ProductImage";
 import { StatusLabel } from "./StatusLabel";
 export function ProductCard({
   product,
@@ -15,10 +16,9 @@ export function ProductCard({
         to={"/products/" + product.slug}
       >
         <span className="art-number">PB / 00{index + 1}</span>
-        <img
-          loading="lazy"
-          src={import.meta.env.BASE_URL + product.gallery[0].src}
-          alt={product.gallery[0].alt}
+        <ProductImage
+          image={product.gallery[0]}
+          sizes="(max-width: 480px) 90vw, (max-width: 800px) 45vw, 30vw"
         />
         <span className="art-bottom">
           DROP 001 <span>VIEW COLLECTIBLE ↗</span>

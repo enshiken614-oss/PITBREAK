@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ProductImage } from "./ProductImage";
 import type { Product } from "../data";
 
 export function ProductGallery({ product }: { product: Product }) {
@@ -9,9 +10,11 @@ export function ProductGallery({ product }: { product: Product }) {
   return (
     <div className="gallery">
       <div className="gallery-main">
-        <img
-          src={import.meta.env.BASE_URL + current.src}
-          alt={current.alt}
+        <ProductImage
+          image={current}
+          sizes="(max-width: 800px) 90vw, 50vw"
+          loading="eager"
+          priority
         />
         <span className="gallery-view-label">
           {labels[selected] ?? `VIEW ${selected + 1}`}
@@ -27,11 +30,7 @@ export function ProductGallery({ product }: { product: Product }) {
               aria-pressed={selected === i}
               onClick={() => setSelected(i)}
             >
-              <img
-                src={import.meta.env.BASE_URL + image.src}
-                alt=""
-                loading="lazy"
-              />
+              <ProductImage image={{ ...image, alt: "" }} sizes="120px" />
               <span>{labels[i] ?? `VIEW ${i + 1}`}</span>
             </button>
           ))}

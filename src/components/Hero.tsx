@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { ProductImage } from "./ProductImage";
 import { products } from "../data";
 
 export function Hero() {
@@ -22,7 +23,10 @@ export function Hero() {
         </Link>
       </div>
 
-      <div className="hero-products" aria-label="PITBREAK DROP 001 product photography">
+      <div
+        className="hero-products"
+        aria-label="PITBREAK DROP 001 product photography"
+      >
         <div className="hero-products-head">
           <span>DROP 001 / THE FIRST DROP</span>
           <span>03 COLLECTIBLES</span>
@@ -35,9 +39,11 @@ export function Hero() {
               className={`hero-product hero-product-${index + 1}`}
               aria-label={`View ${product.title}`}
             >
-              <img
-                src={import.meta.env.BASE_URL + product.gallery[0].src}
-                alt={product.gallery[0].alt}
+              <ProductImage
+                image={product.gallery[0]}
+                sizes="(max-width: 800px) 28vw, 14vw"
+                loading="eager"
+                priority={index === 0}
               />
               <span>{product.title}</span>
             </Link>

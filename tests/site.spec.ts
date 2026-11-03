@@ -1,5 +1,48 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Locator } from "@playwright/test";
 const slugs = ["max-childhood-meme", "lewis-hamilton-meme", "banana-leclerc"];
+test("static sharing metadata and responsive hero images", async ({
+  page,
+  request,
+}) => {
+  const response = await request.get("./");
+  const html = await response.text();
+  expect(html).toContain(
+    "<title>PITBREAK — Racing memes. Real collectibles.</title>",
+  );
+  expect(html).toContain(
+    "https://enshiken614-oss.github.io/PITBREAK/images/social.png",
+  );
+  const social = await request.get("./images/social.png");
+  expect(social.ok()).toBe(true);
+  expect(social.headers()["content-type"]).toContain("image/png");
+  await page.goto("./");
+  const image = page.locator(".hero-product img").first();
+  await expectProductImage(image);
+  expect(await image.evaluate((el: HTMLImageElement) => el.currentSrc)).toMatch(
+    /-(320|640|1122)\.webp$/,
+  );
+  await expect(image).toHaveAttribute("fetchpriority", "high");
+  await expect(page.locator(".product-card img").first()).toHaveAttribute(
+    "loading",
+    "lazy",
+  );
+});
+async function expectProductImage(image: Locator) {
+  await image.scrollIntoViewIfNeeded();
+  await expect
+    .poll(() =>
+      image.evaluate(
+        (el: HTMLImageElement) =>
+          el.complete &&
+          Number(
+            el.currentSrc.match(/-(320|640|1122)\.webp$/)?.[1] ??
+              el.naturalWidth,
+          ) >= Math.min(el.clientWidth * window.devicePixelRatio, 1122) &&
+          el.naturalHeight > el.naturalWidth,
+      ),
+    )
+    .toBe(true);
+}
 test("home, navigation, product routes and disabled checkout", async ({
   page,
 }) => {
@@ -12,13 +55,10 @@ test("home, navigation, product routes and disabled checkout", async ({
   await expect(page.locator(".product-card")).toHaveCount(3);
   await expect(page.locator(".countries li")).toHaveCount(6);
 
-  for (const image of await page.locator(".product-card .product-art img").all()) {
-    expect(
-      await image.evaluate(
-        (el: HTMLImageElement) =>
-          el.complete && el.naturalWidth >= 1000 && el.naturalHeight >= 1200,
-      ),
-    ).toBe(true);
+  for (const image of await page
+    .locator(".product-card .product-art img")
+    .all()) {
+    await expectProductImage(image);
   }
 
   await page.getByRole("link", { name: "EXPLORE DROP 001" }).click();
@@ -28,14 +68,9 @@ test("home, navigation, product routes and disabled checkout", async ({
     await expect(
       page.getByRole("button", { name: "ADD TO CART" }),
     ).toBeDisabled();
-    const mainImage = page.locator(".gallery-main > img");
+    const mainImage = page.locator(".gallery-main img");
     await expect(mainImage).toBeVisible();
-    expect(
-      await mainImage.evaluate(
-        (el: HTMLImageElement) =>
-          el.complete && el.naturalWidth >= 1000 && el.naturalHeight >= 1200,
-      ),
-    ).toBe(true);
+    await expectProductImage(mainImage);
     const thumbs = page.locator(".gallery-thumbs button");
     await expect(thumbs).toHaveCount(2);
     await expect(thumbs.nth(0)).toContainText("FRONT");
@@ -43,12 +78,7 @@ test("home, navigation, product routes and disabled checkout", async ({
     await thumbs.nth(1).click();
     await expect(page.locator(".gallery-view-label")).toHaveText("BACK");
     await expect(mainImage).toBeVisible();
-    expect(
-      await mainImage.evaluate(
-        (el: HTMLImageElement) =>
-          el.complete && el.naturalWidth >= 1000 && el.naturalHeight >= 1200,
-      ),
-    ).toBe(true);
+    await expectProductImage(mainImage);
   }
   await page.goto("./#/cart");
   await expect(
